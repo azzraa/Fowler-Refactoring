@@ -19,14 +19,12 @@ class Customer {
         Enumeration enum_rentals = rentals.elements();
         String result = "Rental Record for " + this.getName() + "\n";
         result += "\t" + "Title" + "\t" + "\t" + "Days" + "\t" + "Amount" + "\n";
+       
         while (enum_rentals.hasMoreElements()) {
-            double thisAmount = 0;
             Rental each = (Rental) enum_rentals.nextElement();
-            thisAmount = each.getCharge();  // Using getCharge() from Rental
-            frequentRenterPoints++;
-            if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
-                frequentRenterPoints++;
-            result += "\t" + each.getMovie().getTitle() + "\t" + "\t" + each.getDaysRented() + "\t" + String.valueOf(thisAmount) + "\n";
+            double thisAmount = each.getCharge();
+            frequentRenterPoints += each.getFrequentRenterPoints();
+            result += "\t" + each.getMovie().getTitle() + "\t" + each.getDaysRented() + "\t" + String.valueOf(thisAmount) + "\n";
             totalAmount += thisAmount;
         }
         result += "Amount owed is " + String.valueOf(totalAmount) + "\n";
